@@ -1,0 +1,68 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "width": 720,
+  "height": 480,
+  "padding": 5,
+  "autosize": "pad",
+  "data": [
+    {
+      "name": "temperature",
+
+      "transform": [
+        {
+          "type": "formula",
+          "as": "day",
+          "expr": "datetime(year(datum.date), month(datum.date), date(datum.date))"
+        },
+        { "type": "filter", "expr": "hours(datum.date) === 12" }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "xscale",
+      "type": "time",
+      "range": "width",
+      "domain": { "data": "temperature", "field": "day" }
+    },
+    {
+      "name": "yscale",
+      "type": "linear",
+      "range": "height",
+      "zero": false,
+      "nice": true,
+      "domain": { "data": "temperature", "field": "temp" }
+    }
+  ],
+
+  "axes": [
+    {
+      "orient": "bottom",
+      "scale": "xscale",
+      "domain": false,
+      "title": "Month",
+      "titlePadding": { "value": 20 },
+      "format": "%b"
+    },
+    { "orient": "left", "scale": "yscale", "title": "Temp" }
+  ],
+
+  "marks": [
+    {
+      "type": "line",
+      "from": { "data": "temperature" },
+      "encode": {
+        "enter": {
+          "strokeWidth": { "value": 2 },
+          "stroke": { "value": "red" }
+        },
+        "update": {
+          "x": { "scale": "xscale", "field": "day" },
+          "y": { "scale": "yscale", "field": "temp" },
+          "interpolate": { "value": "natural" },
+          "opacity": { "value": 1 }
+        }
+      }
+    }
+  ]
+}

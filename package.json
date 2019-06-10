@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "vega-test",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -7,12 +7,28 @@
     "@types/node": "12.0.7",
     "@types/react": "16.8.19",
     "@types/react-dom": "16.8.4",
+    "@types/socket.io-client": "^1.4.32",
+    "antd": "^3.19.2",
+    "axios": "^0.19.0",
+    "concurrently": "^4.1.0",
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^0.19.1",
+    "lodash": "^4.17.11",
+    "mobx": "^5.10.0",
+    "mobx-react": "^6.0.3",
+    "nodemon": "^1.19.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1",
-    "typescript": "3.5.1"
+    "react-vega": "^6.0.1",
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0",
+    "typescript": "3.5.1",
+    "vega": "^5.4.0"
   },
   "scripts": {
+    "dev": "concurrently \"yarn server\" \"yarn start\"",
+    "server": "./node_modules/nodemon/bin/nodemon.js ./server.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -32,5 +48,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://localhost:8080"
 }

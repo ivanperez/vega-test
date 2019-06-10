@@ -1,0 +1,27 @@
+Vega is a visualization grammar, a declarative language for creating, saving, and sharing interactive
+visualization designs.
+With Vega, you can describe the visual appearance and interactive behavior of a visualization in a JSON format,
+and generate web-based views using Canvas or SVG.
+
+With your favourite framework or library like React, Angular, Vue, etc. create a simple app to solve the following problem:
+
+- We have thousands of data points registered of temperature and time obtained from a raspberry pi.
+
+- We need to visualise this data in a chart.
+
+- After some time the supplier of the data has created a server that allows you to obtain the data dynamically through web sockets. You will need to refresh the data in the chart every 2 seconds.
+
+- What kind of events you think are more relevant to describe the maximum information in this chart (i.e. zoom-in, zoom-out).
+
+(1 event at least)(more events are optionals) 
+
+It would be good if you can create somes signals to capture events from the chart in order to visualise more information or relevant information of the chart.
+
+Suggestions:
+
+* Do some of this vega tutorials before starting this exercise. https://vega.github.io/vega/tutorials/
+* Create a function that returns random points of data called randomData like this, for injecting the datasource to the vega visualization:
+
+const randomData = () : {x : number, y: number}[] => {
+    //this function may return an array of random data
+}
