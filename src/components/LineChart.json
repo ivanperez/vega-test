@@ -18,6 +18,16 @@
       ]
     }
   ],
+  "signals": [
+    {
+      "name": "hello",
+      "value": {},
+      "on": [
+        { "events": "@line:mouseover", "update": "datum" },
+        { "events": "@line:mouseout", "update": "{}" }
+      ]
+    }
+  ],
   "scales": [
     {
       "name": "xscale",
@@ -50,6 +60,7 @@
   "marks": [
     {
       "type": "line",
+      "name": "line",
       "from": { "data": "temperature" },
       "encode": {
         "enter": {

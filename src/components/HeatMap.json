@@ -139,7 +139,7 @@
             "band": 1
           },
           "tooltip": {
-            "signal": "timeFormat(datum.date, '%b %d %I:00 %p') + ': ' + datum.temp + '°'"
+            "signal": "{title: date(datum.date) +'/'+ month(datum.date) +' '+ datum.hour + ':00', 'Temperature': datum.temp + ' °C'}"
           }
         },
         "update": {

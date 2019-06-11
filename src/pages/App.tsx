@@ -4,17 +4,31 @@ import { HeatMap, BandChart, LineChart, AreaChart } from "../components";
 import BasicLayout from "../layouts/BasicLayout";
 import axios from "axios";
 import socketIOClient from "socket.io-client";
+import { Handler } from "vega-tooltip";
 
 //import * as vega from "vega";
 
 import "./App.css";
 
+function toShortISO(date: Date) {
+  return date
+    .toISOString()
+    .slice(0, 16)
+    .replace("T", " ");
+}
+
 export default class App extends React.Component {
   state = {
     temperature: [],
     loading: true,
-    error: false
+    error: false,
+    info: ""
   };
+
+  constructor(props: any) {
+    super(props);
+    this.handleHover = this.handleHover.bind(this);
+  }
 
   public async componentDidMount() {
     const resp = await axios.get("/api/temperature");
@@ -34,9 +48,7 @@ export default class App extends React.Component {
     data.forEach((element: any) => {
       for (let hour = 0; hour <= 24; hour++) {
         const item = {
-          date: this.toShortISO(
-            new Date(new Date(element.date).setHours(hour))
-          ),
+          date: toShortISO(new Date(new Date(element.date).setHours(hour))),
           temp: element.temp + Math.floor(Math.random() * Math.abs(hour - 12))
         };
         temperature.push(item);
@@ -46,11 +58,14 @@ export default class App extends React.Component {
     return temperature;
   }
 
-  toShortISO(date: Date) {
-    return date
-      .toISOString()
-      .slice(0, 16)
-      .replace("T", " ");
+  handleHover(signal: any, data: any) {
+    //  console.log(signal, data);
+    if (data.date) {
+      this.setState({
+        info: JSON.stringify(data)
+      });
+      console.log(JSON.stringify(data));
+    }
   }
 
   updateData(data: any) {
@@ -69,6 +84,10 @@ export default class App extends React.Component {
       temperature: this.state.temperature || {}
     };
 
+    const { info } = this.state;
+
+    console.log(info);
+
     return (
       <BasicLayout>
         {this.state.loading ? (
@@ -81,7 +100,10 @@ export default class App extends React.Component {
                 background="white"
                 logLevel={0}
                 renderer="svg"
+                onSignalHello={this.handleHover}
+                tooltip={new Handler().call}
               />
+              --{info}--
             </Card>
             <br />
 
@@ -100,6 +122,7 @@ export default class App extends React.Component {
                 background="white"
                 logLevel={0}
                 renderer="canvas"
+                tooltip={new Handler().call}
               />
             </Card>
             <br />
